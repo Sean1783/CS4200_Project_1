@@ -1,23 +1,21 @@
 import copy
 
+
 class PuzzleState:
     def __init__(self, configuration):
         self.configuration = configuration
-        self.x, self.y = self.find_coordinates()
-
+        self.x, self.y = self.find_coordinates(0)
 
     def set_configuration(self, configuration):
         self.configuration = configuration
-        self.x, self.y = self.find_coordinates()
+        self.x, self.y = self.find_coordinates(0)
 
-
-    def find_coordinates(self):
+    def find_coordinates(self, value):
         for row_index, row in enumerate(self.configuration):
-            if 0 in row:
-                column_index = row.index(0)
+            if value in row:
+                column_index = row.index(value)
                 return row_index, column_index
         return None
-
 
     def generate_alternate_states(self):
         state_array = list()
@@ -27,7 +25,7 @@ class PuzzleState:
             alt_config_1[self.x + 1][self.y] = 0
             alt_config_1[self.x][self.y] = val_1
             state_array.append(PuzzleState(alt_config_1))
-        if self.x -1 >= 0:
+        if self.x - 1 >= 0:
             val_2 = self.configuration[self.x - 1][self.y]
             alt_config_2 = copy.deepcopy(self.configuration)
             alt_config_2[self.x - 1][self.y] = 0
@@ -47,11 +45,16 @@ class PuzzleState:
             state_array.append(PuzzleState(alt_config_4))
         return state_array
 
-
     def print_configuration(self):
         for row in self.configuration:
             print(row)
 
+    def get_configuration(self) -> list[list[int]]:
+        config = list()
+        for row in self.configuration:
+            row_copy = copy.deepcopy(row)
+            config.append(row_copy)
+        return config
 
     def get_key_string(self):
         key_string = ""
@@ -59,3 +62,13 @@ class PuzzleState:
             for value in row:
                 key_string += str(value) + " "
         return key_string
+
+    def to_string(self) -> str:
+        config_string = ""
+        for row in self.configuration:
+            config_string += "\t\t\t"
+            for value in row:
+                config_string += str(value) + " "
+            config_string += "\n"
+        config_string = config_string[:-1]
+        return "\tconfiguration:\n" + config_string + ",\n\tblank coordinate:" + str(self.x) + "," + str(self.y)
