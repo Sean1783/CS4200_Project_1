@@ -45,10 +45,6 @@ class PuzzleState:
             state_array.append(PuzzleState(alt_config_4))
         return state_array
 
-    def print_configuration(self):
-        for row in self.configuration:
-            print(row)
-
     def get_configuration(self) -> list[list[int]]:
         config = list()
         for row in self.configuration:
@@ -71,4 +67,8 @@ class PuzzleState:
                 config_string += str(value) + " "
             config_string += "\n"
         config_string = config_string[:-1]
-        return "\tconfiguration:\n" + config_string + ",\n\tblank coordinate:" + str(self.x) + "," + str(self.y)
+        return "\tconfiguration:\n" + config_string + ",\n\tblank coordinate:" + str(self.x) + " " + str(self.y)
+
+    def print_configuration(self):
+        for row in self.configuration:
+            print(row)
