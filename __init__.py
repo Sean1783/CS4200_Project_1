@@ -52,7 +52,7 @@ def frontier_test():
 
     nodes_created = 0
 
-    root_node = PuzzleNode(state, 0)
+    root_node = PuzzleNode(state, 0, 2)
     root_node.create_total_costs(target_state)
     root_node.enumerate_child_nodes()
 
@@ -63,12 +63,13 @@ def frontier_test():
 
     psc = PuzzleStateComparator()
 
-    for i in range(9490):
+    while frontier:
         current_node = frontier.pop()[2]
         current_state = current_node.get_state()
         is_match = psc.matches_target_state(target_state, current_state)
         if is_match:
-            current_node.print_parents()
+            # current_node.print_parents()
+            current_node.show_root_to_leaf_path()
             break
         child_nodes = current_node.get_children()
         nodes_created += len(child_nodes)

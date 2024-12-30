@@ -73,4 +73,7 @@ class PuzzleState:
 
     def print_configuration(self):
         for row in self.configuration:
-            print(row)
+            row_string = ""
+            for value in row:
+                row_string += str(value) + " "
+            print(row_string)
