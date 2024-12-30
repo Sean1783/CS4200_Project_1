@@ -2,7 +2,9 @@ import sys
 from PuzzleNode import *
 from PuzzleState import *
 from PuzzleStateComparator import *
+from PuzzleSearch import *
 from Frontier import *
+from InputHandler import *
 
 
 def main():
@@ -53,7 +55,7 @@ def frontier_test():
     nodes_created = 0
 
     root_node = PuzzleNode(state, 0, 2)
-    root_node.create_total_costs(target_state)
+    root_node.compute_f_cost(target_state)
     root_node.enumerate_child_nodes()
 
     frontier = Frontier()
@@ -71,19 +73,18 @@ def frontier_test():
             # current_node.print_parents()
             current_node.show_root_to_leaf_path()
             break
-        child_nodes = current_node.get_children()
+        child_nodes = current_node.get_child_nodes()
         nodes_created += len(child_nodes)
         for node in child_nodes:
             if node.get_key() not in closed_list:
-                node.create_total_costs(target_state)
+                node.compute_f_cost(target_state)
                 node.enumerate_child_nodes()
                 frontier.push(node)
 
-    print("total nodes created", nodes_created)
+    print("Search cost:", nodes_created)
 
     # for element in frontier.p_queue:
     #     print(element[2].to_string())
-
 
     # frontier.append({n1.make_key_string(): n1})
     # for node in n1.children:
@@ -129,10 +130,49 @@ def puzzle_state_comparator_test():
     print(psc.total_difference(target_state, state))
     print(psc.num_misplaced(target_state, state))
 
+def puzzle_search_test():
+    state = PuzzleState([
+        [0, 1, 4],
+        [8, 7, 6],
+        [3, 5, 2]
+    ])
+
+    target_state = PuzzleState([
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8]
+    ])
+
+    puzzle_search = PuzzleSearch(target_state, state, 1)
+    puzzle_search.search(16)
+
+def main_interaction_sequence():
+    puzzle_selection = ("Select:\n"
+                + "[1] Single Test Puzzle\n"
+                + "[2] Multi-Test Puzzle\n"
+                + "[3] Exit\n")
+    print(puzzle_selection)
+    input_handler = InputHandler()
+    puzzle_option_selection = input_handler.validate_puzzle_selection()
+
+    input_selection = ("Select Input Method:\n"
+        + "[1] Random\n"
+        + "[2] File\n")
+
+    print(input_selection)
+    input_selection = input_handler.validate_input_selection()
+
+    solution_depth = "Enter Solution Depth (2-20):\n"
+    print(solution_depth)
+    input_handler.validate_solution_depth()
+
 
 if __name__ == '__main__':
     # main()
-    frontier_test()
+    # frontier_test()
     # puzzle_node_test()
     # puzzle_state_test()
     # puzzle_state_comparator_test()
+    # puzzle_search_test()
+    main_interaction_sequence()
+

@@ -6,7 +6,7 @@ class Frontier:
         self.p_queue = []
 
     def push(self, puzzle_node : PuzzleNode):
-        f_cost = puzzle_node.get_total_cost()
+        f_cost = puzzle_node.get_f_cost()
         heapq.heappush(self.p_queue, (f_cost, id(puzzle_node), puzzle_node))
 
     def pop(self):

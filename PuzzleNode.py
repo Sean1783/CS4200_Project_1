@@ -8,38 +8,26 @@ class PuzzleNode:
         self.key = self.make_key_string()
         self.parent = None
         self.children = list()
-        self.g_cost = g_cost
         self.h_function = h_function
         self.h_cost = 0
-        # self.h1_cost = 0
-        # self.h2_cost = 0
         self.f_cost = 0
+        self.g_cost = g_cost
 
     def calculate_h1_cost(self, target_puzzle_state: PuzzleState) -> int:
         state_comparator = PuzzleStateComparator()
-        # self.h1_cost = state_comparator.num_misplaced(target_puzzle_state, self.state)
-        # self.h_cost = state_comparator.num_misplaced(target_puzzle_state, self.state)
         h_cost = state_comparator.num_misplaced(target_puzzle_state, self.state)
         return h_cost
 
     def calculate_h2_cost(self, target_puzzle_state: PuzzleState) -> int:
         state_comparator = PuzzleStateComparator()
-        # self.h2_cost = state_comparator.total_difference(target_puzzle_state, self.state)
-        # self.h_cost = state_comparator.total_difference(target_puzzle_state, self.state)
         h_cost = state_comparator.total_difference(target_puzzle_state, self.state)
         return h_cost
 
-    def create_total_costs(self, target_puzzle_state: PuzzleState) -> None:
+    def compute_f_cost(self, target_puzzle_state: PuzzleState) -> None:
         h_cost = 0
         if self.h_function == 1:
-            # self.calculate_h1_cost(target_puzzle_state)
-            # self.f_cost = self.h1_cost + self.g_cost
-            # self.f_cost = self.h_cost + self.g_cost
             h_cost = self.calculate_h1_cost(target_puzzle_state)
         elif self.h_function == 2:
-            # self.calculate_h2_cost(target_puzzle_state)
-            # self.f_cost = self.h2_cost + self.g_cost
-            # self.f_cost = self.h_cost + self.g_cost
             h_cost = self.calculate_h2_cost(target_puzzle_state)
         self.f_cost = self.g_cost + h_cost
 
@@ -54,10 +42,14 @@ class PuzzleNode:
         return self.state
 
     def get_h_costs(self) -> (int, int):
-        return self.h1_cost, self.h2_cost
+        # return self.h1_cost, self.h2_cost
+        return self.h_cost
 
-    def get_total_cost(self) -> int:
+    def get_f_cost(self) -> int:
         return self.f_cost
+
+    def get_g_cost(self) -> int:
+        return self.g_cost
 
     def get_parent(self):
         return self.parent
@@ -65,14 +57,14 @@ class PuzzleNode:
     def get_puzzle_state_configuration(self) -> list[list[int]]:
         return self.state.get_configuration()
 
-    def get_children(self):
+    def get_child_nodes(self):
         return self.children
 
     def get_key(self) -> str:
         return copy.copy(self.key)
 
-    def set_parent(self, parent) -> None:
-        self.parent = parent
+    def set_parent(self, parent_node) -> None:
+        self.parent = parent_node
 
     def make_key_string(self) -> str:
         state_config = self.get_puzzle_state_configuration()
@@ -83,7 +75,7 @@ class PuzzleNode:
         return key_string
 
     def show_root_to_leaf_path(self):
-        node_stack = []
+        node_stack = list()
         current_node = self
         node_stack.append(current_node)
         current_node = self.parent
@@ -103,13 +95,12 @@ class PuzzleNode:
 
     def to_string(self) -> str:
         state_config_string = self.state.to_string()
-        return (("{\n" +
+        return ("{\n" +
                  repr(self) + "\n" +
                  "\tkey:" + self.key + ",\n" +
                  state_config_string + ",\n" +
                  "\tg_cost:" + str(self.g_cost) + ",\n" +
                  "\tf_cost:" + str(self.f_cost) + ",\n" +
-                 "\th1_cost:" + str(self.h1_cost) + ",\n" +
-                 "\th2_cost:" + str(self.h2_cost)) + "\n" +
+                 "\th_cost:" + str(self.h_cost) + ",\n" +
                 "\tparent:" + repr(self.parent) + "\n" +
                 "}")

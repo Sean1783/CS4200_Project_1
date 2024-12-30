@@ -68,8 +68,6 @@ class PuzzleState:
             config_string += "\n"
         config_string = config_string[:-1]
         return "\tconfiguration:\n" + config_string
-                # ",\n\tblank coordinate:" +
-                # str(self.x) + " " + str(self.y))
 
     def print_configuration(self):
         for row in self.configuration:
