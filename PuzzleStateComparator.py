@@ -1,7 +1,6 @@
-from puzzleState import *
+from PuzzleState import *
 
 class PuzzleStateComparator:
-
 
     def create_value_location_map(self, puzzle_state: PuzzleState) -> {int : (int, int)}:
         value_location_map = dict()
@@ -38,12 +37,11 @@ class PuzzleStateComparator:
                 total_misplaced += 1
         return total_misplaced
 
+
     def matches_target_state(self, target_state : PuzzleState, current_state : PuzzleState) -> bool:
         target_value_location_map = self.create_value_location_map(target_state)
         current_value_location_map = self.create_value_location_map(current_state)
         for key in target_value_location_map.keys():
-        # for key, value in target_value_location_map.items():
-        #     print(key, target_value_location_map[key], current_value_location_map[key])
             if current_value_location_map[key] != target_value_location_map[key]:
                 return False
         return True
