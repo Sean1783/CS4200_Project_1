@@ -1,6 +1,6 @@
 class Dialogue:
 
-    def puzzle_selection_prompt(self):
+    def select_or_exit_prompt(self):
         prompt = ("Select:\n"
         + "[1] Single Test Puzzle\n"
        + "[2] Multi-Test Puzzle\n"
@@ -23,3 +23,16 @@ class Dialogue:
          + "[2] H2")
         print(prompt)
 
+    def solution_not_found(self, depth):
+        print("Solution not found at depth " + str(depth))
+
+    def execution_time(self, execution_time_value):
+        print(f'Execution time: {execution_time_value:.6f} seconds')
+
+    def search_cost(self, search_cost):
+        print("Search Cost:" + str(search_cost))
+
+    def search_complete(self, execution_time, search_cost):
+        self.execution_time(execution_time)
+        self.search_cost(search_cost)
+        print("")

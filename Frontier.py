@@ -15,4 +15,7 @@ class Frontier:
     def peek(self):
         return self.p_queue[0] if self.p_queue else None
 
+    def is_empty(self):
+        return len(self.p_queue) == 0
+
 

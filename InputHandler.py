@@ -22,7 +22,7 @@ class InputHandler():
         while not valid_input:
             try:
                 user_input = int(input())
-                if user_input < 1:
+                if not 0 < user_input <= 20:
                     valid_input = False
                     print("Invalid input. Please enter a positive integer.")
                     continue

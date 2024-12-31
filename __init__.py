@@ -1,4 +1,6 @@
 import sys
+import time
+
 from PuzzleNode import *
 from PuzzleState import *
 from PuzzleStateComparator import *
@@ -158,31 +160,46 @@ def main_interaction_sequence():
         [6, 7, 8]
     ])
 
-    dialogue = Dialogue()
-    dialogue.puzzle_selection_prompt()
-    input_handler = InputHandler()
-    puzzle_option_selection = input_handler.validate_puzzle_selection()
+    puzzle_option_selection = 1
+    while puzzle_option_selection != 3:
 
-    dialogue.input_selection_prompt()
-    input_method = input_handler.validate_input_selection()
-    initial_state_config = None
-    if input_method == 1:
-        rpg = RandomPuzzleGenerator()
-        initial_state_config = rpg.generate_random_state_config()
-        print("Puzzle:")
-        for row in initial_state_config:
-            print(row)
+        dialogue = Dialogue()
+        dialogue.select_or_exit_prompt()
+        input_handler = InputHandler()
+        puzzle_option_selection = input_handler.validate_puzzle_selection()
 
-    initial_state = PuzzleState(initial_state_config)
-    dialogue.depth_prompt()
-    solution_depth = input_handler.validate_solution_depth()
-    dialogue.select_h_function_prompt()
-    selected_h_function = input_handler.validate_h_function()
-    puzzle_search = PuzzleSearch(target_state, initial_state, selected_h_function)
-    found, search_cost = puzzle_search.search(solution_depth)
-    if not found:
-        print("No solution found at depth ", solution_depth)
-    print("Search cost:", search_cost)
+        if puzzle_option_selection != 3:
+            dialogue.input_selection_prompt()
+            input_method = input_handler.validate_input_selection()
+            initial_state_config = None
+            if input_method == 1:
+                rpg = RandomPuzzleGenerator()
+                initial_state_config = rpg.generate_random_state_config()
+                print("Puzzle:")
+                for row in initial_state_config:
+                    print(row)
+
+            # initial_state = PuzzleState(initial_state_config)
+            initial_state = PuzzleState([
+                [5, 4, 1],
+                [7, 6, 3],
+                [8, 2, 0]
+            ])
+            dialogue.depth_prompt()
+            solution_depth = input_handler.validate_solution_depth()
+            dialogue.select_h_function_prompt()
+            selected_h_function = input_handler.validate_h_function()
+            puzzle_search = PuzzleSearch(target_state, initial_state, selected_h_function)
+            start_time = time.time()
+            found, search_cost = puzzle_search.search(solution_depth)
+            end_time = time.time()
+            execution_time = end_time - start_time
+            if not found:
+                dialogue.solution_not_found(solution_depth)
+            dialogue.search_complete(execution_time, search_cost)
+        else:
+            print("Goodbye")
+            break
 
 
 def random_puzzle_generator_test():
