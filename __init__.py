@@ -5,6 +5,8 @@ from PuzzleStateComparator import *
 from PuzzleSearch import *
 from Frontier import *
 from InputHandler import *
+from RandomPuzzleGenerator import *
+from Dialogue import *
 
 
 def main():
@@ -130,6 +132,7 @@ def puzzle_state_comparator_test():
     print(psc.total_difference(target_state, state))
     print(psc.num_misplaced(target_state, state))
 
+
 def puzzle_search_test():
     state = PuzzleState([
         [0, 1, 4],
@@ -144,27 +147,50 @@ def puzzle_search_test():
     ])
 
     puzzle_search = PuzzleSearch(target_state, state, 1)
-    puzzle_search.search(16)
+    puzzle_search.search(20)
+
 
 def main_interaction_sequence():
-    puzzle_selection = ("Select:\n"
-                + "[1] Single Test Puzzle\n"
-                + "[2] Multi-Test Puzzle\n"
-                + "[3] Exit\n")
-    print(puzzle_selection)
+
+    target_state = PuzzleState([
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8]
+    ])
+
+    dialogue = Dialogue()
+    dialogue.puzzle_selection_prompt()
     input_handler = InputHandler()
     puzzle_option_selection = input_handler.validate_puzzle_selection()
 
-    input_selection = ("Select Input Method:\n"
-        + "[1] Random\n"
-        + "[2] File\n")
+    dialogue.input_selection_prompt()
+    input_method = input_handler.validate_input_selection()
+    initial_state_config = None
+    if input_method == 1:
+        rpg = RandomPuzzleGenerator()
+        initial_state_config = rpg.generate_random_state_config()
+        print("Puzzle:")
+        for row in initial_state_config:
+            print(row)
 
-    print(input_selection)
-    input_selection = input_handler.validate_input_selection()
+    initial_state = PuzzleState(initial_state_config)
+    dialogue.depth_prompt()
+    solution_depth = input_handler.validate_solution_depth()
+    dialogue.select_h_function_prompt()
+    selected_h_function = input_handler.validate_h_function()
+    puzzle_search = PuzzleSearch(target_state, initial_state, selected_h_function)
+    found, search_cost = puzzle_search.search(solution_depth)
+    if not found:
+        print("No solution found at depth ", solution_depth)
+    print("Search cost:", search_cost)
 
-    solution_depth = "Enter Solution Depth (2-20):\n"
-    print(solution_depth)
-    input_handler.validate_solution_depth()
+
+def random_puzzle_generator_test():
+    rpg = RandomPuzzleGenerator()
+    random_puzzle = rpg.generate_random_puzzle_string()
+    print(random_puzzle)
+    state_config = rpg.generate_state_config_from_string(random_puzzle)
+    print(state_config)
 
 
 if __name__ == '__main__':
@@ -174,5 +200,7 @@ if __name__ == '__main__':
     # puzzle_state_test()
     # puzzle_state_comparator_test()
     # puzzle_search_test()
+    # random_puzzle_generator_test()
     main_interaction_sequence()
+
 
