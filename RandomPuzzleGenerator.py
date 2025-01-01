@@ -1,4 +1,5 @@
 import random
+from PuzzleState import *
 
 class RandomPuzzleGenerator:
 
@@ -40,12 +41,12 @@ class RandomPuzzleGenerator:
             state_config_string = self.generate_random_puzzle_string()
         return self.generate_state_config_from_string(state_config_string)
 
-    def is_target_reachable(self, target_state, initial_state):
-        target_total_inversions = self.compute_inversions(target_state)
-        initial_total_misplaced = self.compute_inversions(initial_state)
-        target_orientations = target_total_inversions % 2
-        initial_orientations = initial_total_misplaced % 2
-        return target_orientations == initial_orientations
+    def is_target_reachable(self, target_state_string, initial_state_string):
+        target_total_inversions = self.compute_inversions(target_state_string)
+        initial_state_total_inversions = self.compute_inversions(initial_state_string)
+        target_orientation = target_total_inversions % 2
+        initial_orientation = initial_state_total_inversions % 2
+        return target_orientation == initial_orientation
 
     def compute_inversions(self, some_state_string):
         state_string = some_state_string[:].replace("0", "")
@@ -55,5 +56,14 @@ class RandomPuzzleGenerator:
                 if state_string[j] > state_string[j+1]:
                     total_inversions += 1
         return total_inversions
+
+    def validate_user_puzzles(self, target_config, user_puzzles):
+        target_state = PuzzleState(target_config)
+        for puzzle in user_puzzles:
+            state = PuzzleState(puzzle)
+            target_is_reachable = self.is_target_reachable(target_state.get_key_string(), state.get_key_string())
+            if not target_is_reachable:
+                return False
+        return True
 
 

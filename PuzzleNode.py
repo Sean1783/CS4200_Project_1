@@ -74,18 +74,21 @@ class PuzzleNode:
                 key_string += str(value) + " "
         return key_string
 
-    def show_root_to_leaf_path(self):
+    def show_root_to_leaf_path(self) -> int:
         node_stack = list()
         current_node = self
         node_stack.append(current_node)
         current_node = self.parent
+        depth = 0
         while current_node is not None:
             node_stack.append(current_node)
             current_node = current_node.get_parent()
         while node_stack:
             node = node_stack.pop()
             print("Step : ", node.g_cost)
+            depth = node.g_cost
             node.get_state().print_configuration()
+        return depth
 
     def print_parents(self) -> None:
         print("Step : ", self.g_cost)

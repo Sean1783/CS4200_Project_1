@@ -1,4 +1,3 @@
-from PuzzleState import *
 from Frontier import *
 
 class PuzzleSearch:
@@ -6,10 +5,9 @@ class PuzzleSearch:
         self.initial_state = initial_state
         self.target_state = target_state
         self.h_function = h_function
-        # self.search_cost = 0
 
 
-    def search(self, depth : int) -> (bool, int):
+    def search(self, depth : int) -> (bool, int, int):
         search_cost = 0
         root_node = PuzzleNode(self.initial_state, 0, self.h_function)
         root_node.compute_f_cost(self.target_state)
@@ -21,6 +19,7 @@ class PuzzleSearch:
 
         psc = PuzzleStateComparator()
         is_goal_reached = False
+        current_depth = 0
 
         while not frontier.is_empty():
             _, _, current_node = frontier.pop()
@@ -31,7 +30,7 @@ class PuzzleSearch:
             current_state = current_node.get_state()
             is_goal_reached = psc.matches_target_state(self.target_state, current_state)
             if is_goal_reached:
-                current_node.show_root_to_leaf_path()
+                current_depth = current_node.show_root_to_leaf_path()
                 break
             child_nodes = current_node.get_child_nodes()
             for node in child_nodes:
@@ -46,6 +45,5 @@ class PuzzleSearch:
                     frontier.push(node)
                     explored_list[node_key] = node
 
-        return is_goal_reached, search_cost
-
+        return is_goal_reached, search_cost, current_depth
 

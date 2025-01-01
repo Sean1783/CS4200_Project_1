@@ -1,6 +1,7 @@
+
 class PuzzleExtractor:
 
-    def extract_numbers(self, filename):
+    def extract_puzzles_from_file(self, filename):
         matrices = list()
 
         with open(filename, 'r') as file:
@@ -18,5 +19,7 @@ class PuzzleExtractor:
                 current_puzzle_matrix.append(num_row)
         if current_puzzle_matrix:
             matrices.append(current_puzzle_matrix)
+        file.close()
+
         return matrices
 
