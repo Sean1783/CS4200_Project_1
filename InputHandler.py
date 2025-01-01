@@ -5,7 +5,7 @@ class InputHandler():
 
     def validate_puzzle_selection(self):
         user_input = input()
-        while user_input != "1" and user_input != "2" and user_input != "3":
+        while user_input != "1" and user_input != "2":
             print("Invalid input.")
             user_input = input()
         return int(user_input)
@@ -22,7 +22,7 @@ class InputHandler():
         while not valid_input:
             try:
                 user_input = int(input())
-                if not 0 < user_input <= 20:
+                if not 0 < user_input <= 25:
                     valid_input = False
                     print("Invalid input. Please enter a positive integer.")
                     continue

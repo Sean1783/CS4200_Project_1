@@ -1,14 +1,12 @@
 import sys
 import time
 
-from PuzzleNode import *
-from PuzzleState import *
-from PuzzleStateComparator import *
 from PuzzleSearch import *
 from Frontier import *
 from InputHandler import *
 from RandomPuzzleGenerator import *
 from Dialogue import *
+from PuzzleExtractor import *
 
 
 def main():
@@ -161,30 +159,30 @@ def main_interaction_sequence():
     ])
 
     puzzle_option_selection = 1
-    while puzzle_option_selection != 3:
+    while puzzle_option_selection != 2:
 
         dialogue = Dialogue()
         dialogue.select_or_exit_prompt()
         input_handler = InputHandler()
         puzzle_option_selection = input_handler.validate_puzzle_selection()
 
-        if puzzle_option_selection != 3:
+        if puzzle_option_selection != 2:
             dialogue.input_selection_prompt()
             input_method = input_handler.validate_input_selection()
             initial_state_config = None
             if input_method == 1:
                 rpg = RandomPuzzleGenerator()
-                initial_state_config = rpg.generate_random_state_config()
+                initial_state_config = rpg.generate_random_state_config(target_state)
                 print("Puzzle:")
                 for row in initial_state_config:
                     print(row)
 
-            # initial_state = PuzzleState(initial_state_config)
-            initial_state = PuzzleState([
-                [5, 4, 1],
-                [7, 6, 3],
-                [8, 2, 0]
-            ])
+            initial_state = PuzzleState(initial_state_config)
+            # initial_state = PuzzleState([
+            #     [5, 4, 1],
+            #     [7, 6, 3],
+            #     [8, 2, 0]
+            # ])
             dialogue.depth_prompt()
             solution_depth = input_handler.validate_solution_depth()
             dialogue.select_h_function_prompt()
@@ -210,6 +208,13 @@ def random_puzzle_generator_test():
     print(state_config)
 
 
+def puzzle_extractor_test():
+    extractor = PuzzleExtractor()
+    matrices = extractor.extract_numbers("project1/Length4.txt")
+    for m in matrices:
+        print(m)
+
+
 if __name__ == '__main__':
     # main()
     # frontier_test()
@@ -218,6 +223,8 @@ if __name__ == '__main__':
     # puzzle_state_comparator_test()
     # puzzle_search_test()
     # random_puzzle_generator_test()
-    main_interaction_sequence()
+    # main_interaction_sequence()
+    puzzle_extractor_test()
+
 
 

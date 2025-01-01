@@ -52,7 +52,7 @@ class PuzzleState:
             config.append(row_copy)
         return config
 
-    def get_key_string(self):
+    def get_key_string(self) -> str:
         key_string = ""
         for row in self.configuration:
             for value in row:

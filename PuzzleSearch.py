@@ -26,7 +26,6 @@ class PuzzleSearch:
             _, _, current_node = frontier.pop()
             current_depth = current_node.get_g_cost()
             if current_depth > depth:
-                # break
                 continue
             explored_list[current_node.get_key()] = current_node
             current_state = current_node.get_state()
@@ -46,14 +45,6 @@ class PuzzleSearch:
                     node.enumerate_child_nodes()
                     frontier.push(node)
                     explored_list[node_key] = node
-                # else:
-                #     twin_node = explored_list[node.get_key()]
-                #     if twin_node.get_g_cost() > node.get_g_cost():
-                #         search_cost += 1
-                #         node.compute_f_cost(self.target_state)
-                #         node.enumerate_child_nodes()
-                #         frontier.push(node)
-                #         explored_list[node.get_key()] = node
 
         return is_goal_reached, search_cost
 

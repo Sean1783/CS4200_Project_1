@@ -1,10 +1,14 @@
 class Dialogue:
 
     def select_or_exit_prompt(self):
+       #  prompt = ("Select:\n"
+       #  + "[1] Single Test Puzzle\n"
+       # + "[2] Multi-Test Puzzle\n"
+       # + "[3] Exit")
+
         prompt = ("Select:\n"
-        + "[1] Single Test Puzzle\n"
-       + "[2] Multi-Test Puzzle\n"
-       + "[3] Exit")
+                  + "[1] Test Puzzle\n"
+                  + "[2] Exit")
         print(prompt)
 
     def input_selection_prompt(self):
