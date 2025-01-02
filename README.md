@@ -9,7 +9,7 @@ To run this program, you'll need Python 3.9 or newer installed (due to type hint
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/project-name.git
+   git clone https://github.com/Sean1783/CS4200_Project_1
    cd project-name
    ```
 
