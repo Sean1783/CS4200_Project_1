@@ -2,10 +2,11 @@ from puzzle_frontier import *
 
 
 class PuzzleSearch:
-    def __init__(self, target_state: PuzzleState, initial_state: PuzzleState, h_function: int):
+    def __init__(self, target_state: PuzzleState, initial_state: PuzzleState, h_function: int, print_path : bool):
         self.initial_state = initial_state
         self.target_state = target_state
         self.h_function = h_function
+        self.print_path = print_path
 
     def search(self, depth: int) -> (bool, int, int):
         search_cost = 0
@@ -30,7 +31,8 @@ class PuzzleSearch:
             current_state = current_node.get_state()
             is_goal_reached = psc.matches_target_state(self.target_state, current_state)
             if is_goal_reached:
-                current_depth = current_node.show_root_to_leaf_path()
+                if self.print_path:
+                    current_depth = current_node.show_root_to_leaf_path()
                 break
             child_nodes = current_node.get_child_nodes()
             for node in child_nodes:

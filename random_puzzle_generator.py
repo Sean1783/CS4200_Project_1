@@ -50,11 +50,11 @@ class RandomPuzzleGenerator:
         return target_orientation == initial_orientation
 
     def compute_inversions(self, some_state_string : str) -> int:
-        state_string = some_state_string[:].replace("0", "")
+        state_string = [int(i) for i in some_state_string.split() if i != "0"]
         total_inversions = 0
-        for i in range(len(state_string) - 1):
-            for j in range(i, len(state_string) - 1):
-                if state_string[j] > state_string[j + 1]:
+        for i in range(len(state_string)):
+            for j in range(i + 1, len(state_string)):
+                if state_string[i] > state_string[j]:
                     total_inversions += 1
         return total_inversions
 

@@ -13,7 +13,7 @@ class InputHandler:
 
     def validate_input_selection(self):
         user_input = input()
-        while user_input != "1" and user_input != "2":
+        while user_input != "1" and user_input != "2" and user_input != "3":
             if self.quit_program(user_input):
                 return user_input
             print("Invalid input.")
@@ -64,5 +64,30 @@ class InputHandler:
             user_input = input("Press enter to continue.")
 
     def quit_program(self, user_input):
-        if user_input == ":q":
+        if ":q" in user_input:
             return True
+
+    def manual_configuration_handler(self) -> str:
+        validated_config_string = ""
+        validation_complete = False
+        while not validation_complete:
+            validation_complete = True
+            print("Enter a valid configuration string.\n")
+            manually_entered_configuration = input().split()
+            for value in manually_entered_configuration:
+                if self.quit_program(value):
+                    return value
+                if not value.isdigit():
+                    print("Invalid input.")
+                    validation_complete = False
+                    validated_config_string = ""
+                    break
+                else:
+                    validated_config_string += value + " "
+            if validated_config_string == "":
+                print("Invalid input.")
+                validation_complete = False
+
+        return validated_config_string
+
+

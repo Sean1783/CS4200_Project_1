@@ -29,22 +29,22 @@ def test_sequence(initial_state_config : list[list[int]], target_config: list[li
         return ":q"
 
     target_state = PuzzleState(target_config)
-    puzzle_search = PuzzleSearch(target_state, initial_state, selected_h_function)
+    puzzle_search = PuzzleSearch(target_state, initial_state, selected_h_function, True)
     start_time = time.time()
     found, search_cost, depth = puzzle_search.search(solution_depth)
     end_time = time.time()
     execution_time = end_time - start_time
     if not found:
-        dialogue.solution_not_found(solution_depth)
-        depth -= 1
+        dialogue.solution_not_found(max_solution_depth)
+        dialogue.search_complete(execution_time, search_cost, max_solution_depth)
     elif found:
         dialogue.solution_found()
-    dialogue.search_complete(execution_time, search_cost, depth)
+        dialogue.search_complete(execution_time, search_cost, depth)
 
 
 def main_sequence(target_config : list[list[int]], max_depth : int) -> None:
-    puzzle_option_selection = 1
-    while puzzle_option_selection != 2:
+    puzzle_option_selection = ""
+    while puzzle_option_selection != ":q":
 
         dialogue = Dialogue()
         dialogue.select_or_exit_prompt()
@@ -78,8 +78,23 @@ def main_sequence(target_config : list[list[int]], max_depth : int) -> None:
                     user_response = test_sequence(initial_state_config, target_config, max_depth)
                     if user_response == ":q":
                         break
+            elif input_method == 3:
+                dialogue.manual_input_prompt()
+                manual_initial_config_string = input_handler.manual_configuration_handler()
+                if manual_initial_config_string == ":q":
+                    break
+                rpg = RandomPuzzleGenerator()
+                manual_initial_config = rpg.generate_state_config_from_string(manual_initial_config_string)
+                print("Initial puzzle state: ")
+                for row in manual_initial_config:
+                    for element in row:
+                        print(element, end=" ")
+                    print()
+                user_response = test_sequence(manual_initial_config, target_config, max_depth)
+                if user_response == ":q":
+                    break
             elif input_method == ":q":
                 break
         else:
-            print("Goodbye")
             break
+    print("Goodbye")

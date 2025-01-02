@@ -2,16 +2,17 @@ class Dialogue:
 
     def select_or_exit_prompt(self) -> None:
         prompt = (
-            "Select:\n"
-            + "[Enter] Begin the testing sequence.\n"
-            + "[:q]    Exit the current sequence at any point.")
+            "\n" +
+            "[Enter] Begin the testing sequence.\n" +
+            "[:q]    Exit the current sequence at any point.")
         print(prompt)
 
     def input_selection_prompt(self) -> None:
         prompt = (
             "Select initial puzzle state generation method:\n" +
             "[1] Create a random initial puzzle configuration.\n" +
-            "[2] Extract puzzle configurations from a file.\n")
+            "[2] Extract puzzle configurations from a file.\n" +
+            "[3] Enter configuration manually.\n")
         print(prompt)
 
     def depth_prompt(self) -> None:
@@ -48,4 +49,15 @@ class Dialogue:
 
     def file_name_prompt(self) -> None:
         prompt = "Enter file name:"
+        print(prompt)
+
+    def manual_input_prompt(self) -> None:
+        prompt = (
+            "Enter values in the order they appear from left to right\n" +
+            "and top to bottom in your puzzle. Separate the values with a space.\n" +
+            "Use a '0' to represent the blank cell in your puzzle.\n\n"
+            "1 2 3\n" +
+            "4 0 5\t--->\t1 2 3 4 0 5 6 7 8\n" +
+            "6 7 8\n"
+        )
         print(prompt)
