@@ -2,15 +2,15 @@ import copy
 
 
 class PuzzleState:
-    def __init__(self, configuration):
+    def __init__(self, configuration : list[list[int]]):
         self.configuration = configuration
         self.x, self.y = self.find_coordinates(0)
 
-    def set_configuration(self, configuration):
+    def set_configuration(self, configuration : list[list[int]]):
         self.configuration = configuration
         self.x, self.y = self.find_coordinates(0)
 
-    def find_coordinates(self, value):
+    def find_coordinates(self, value : int):
         for row_index, row in enumerate(self.configuration):
             if value in row:
                 column_index = row.index(value)

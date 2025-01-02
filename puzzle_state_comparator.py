@@ -1,8 +1,9 @@
-from PuzzleState import *
+from puzzle_state import *
+
 
 class PuzzleStateComparator:
 
-    def create_value_location_map(self, puzzle_state: PuzzleState) -> {int : (int, int)}:
+    def create_value_location_map(self, puzzle_state: PuzzleState) -> {int: (int, int)}:
         value_location_map = dict()
         config = puzzle_state.get_configuration()
         for row_idx in range(len(config)):
@@ -12,8 +13,7 @@ class PuzzleStateComparator:
                 value_location_map[value] = coordinates
         return value_location_map
 
-
-    def total_difference(self, target_state : PuzzleState, current_state : PuzzleState) -> int:
+    def total_difference(self, target_state: PuzzleState, current_state: PuzzleState) -> int:
         aggregate_difference = 0
         target_value_location_map = self.create_value_location_map(target_state)
         current_value_location_map = self.create_value_location_map(current_state)
@@ -25,8 +25,7 @@ class PuzzleStateComparator:
             aggregate_difference += (x_difference + y_difference)
         return aggregate_difference
 
-
-    def num_misplaced(self, target_state : PuzzleState, current_state : PuzzleState) -> int:
+    def num_misplaced(self, target_state: PuzzleState, current_state: PuzzleState) -> int:
         total_misplaced = 0
         target_value_location_map = self.create_value_location_map(target_state)
         current_value_location_map = self.create_value_location_map(current_state)
@@ -37,12 +36,10 @@ class PuzzleStateComparator:
                 total_misplaced += 1
         return total_misplaced
 
-
-    def matches_target_state(self, target_state : PuzzleState, current_state : PuzzleState) -> bool:
+    def matches_target_state(self, target_state: PuzzleState, current_state: PuzzleState) -> bool:
         target_value_location_map = self.create_value_location_map(target_state)
         current_value_location_map = self.create_value_location_map(current_state)
         for key in target_value_location_map.keys():
             if current_value_location_map[key] != target_value_location_map[key]:
                 return False
         return True
-

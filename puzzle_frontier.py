@@ -1,11 +1,12 @@
 import heapq
-from PuzzleNode import *
+from puzzle_node import *
 
-class Frontier:
+
+class PuzzleFrontier:
     def __init__(self):
         self.p_queue = []
 
-    def push(self, puzzle_node : PuzzleNode):
+    def push(self, puzzle_node: PuzzleNode):
         f_cost = puzzle_node.get_f_cost()
         heapq.heappush(self.p_queue, (f_cost, id(puzzle_node), puzzle_node))
 
@@ -17,5 +18,3 @@ class Frontier:
 
     def is_empty(self):
         return len(self.p_queue) == 0
-
-

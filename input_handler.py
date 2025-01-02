@@ -57,13 +57,11 @@ class InputHandler:
             my_file = Path(file_name)
         return file_name
 
-
     def user_puzzle_handling(self):
         print("The target puzzle is not reachable by one or more user input puzzles.")
         user_input = input("Press enter to continue.")
-        while user_input !=  "":
+        while user_input != "":
             user_input = input("Press enter to continue.")
-
 
     def quit_program(self, user_input):
         if user_input == ":q":

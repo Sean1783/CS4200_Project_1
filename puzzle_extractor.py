@@ -1,7 +1,6 @@
-
 class PuzzleExtractor:
 
-    def extract_puzzles_from_file(self, filename):
+    def extract_puzzles_from_file(self, filename : str) -> [list[list[list[int]]]]:
         matrices = list()
 
         with open(filename, 'r') as file:
@@ -22,4 +21,3 @@ class PuzzleExtractor:
         file.close()
 
         return matrices
-

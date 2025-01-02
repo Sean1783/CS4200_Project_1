@@ -1,5 +1,4 @@
-from PuzzleState import *
-from PuzzleStateComparator import *
+from puzzle_state_comparator import *
 
 
 class PuzzleNode:
@@ -99,11 +98,11 @@ class PuzzleNode:
     def to_string(self) -> str:
         state_config_string = self.state.to_string()
         return ("{\n" +
-                 repr(self) + "\n" +
-                 "\tkey:" + self.key + ",\n" +
-                 state_config_string + ",\n" +
-                 "\tg_cost:" + str(self.g_cost) + ",\n" +
-                 "\tf_cost:" + str(self.f_cost) + ",\n" +
-                 "\th_cost:" + str(self.h_cost) + ",\n" +
+                repr(self) + "\n" +
+                "\tkey:" + self.key + ",\n" +
+                state_config_string + ",\n" +
+                "\tg_cost:" + str(self.g_cost) + ",\n" +
+                "\tf_cost:" + str(self.f_cost) + ",\n" +
+                "\th_cost:" + str(self.h_cost) + ",\n" +
                 "\tparent:" + repr(self.parent) + "\n" +
                 "}")

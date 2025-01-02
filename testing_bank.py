@@ -1,12 +1,11 @@
 import sys
-import time
 
-from PuzzleSearch import *
-from Frontier import *
-from InputHandler import *
-from RandomPuzzleGenerator import *
-from Dialogue import *
-from PuzzleExtractor import *
+from puzzle_search import *
+from input_handler import *
+from random_puzzle_generator import *
+from dialogue import *
+from puzzle_extractor import *
+from puzzle_state import *
 
 
 def main():
@@ -60,7 +59,7 @@ def frontier_test():
     root_node.compute_f_cost(target_state)
     root_node.enumerate_child_nodes()
 
-    frontier = Frontier()
+    frontier = PuzzleFrontier()
     frontier.push(root_node)
     closed_list = dict()
     closed_list[root_node.get_key()] = root_node

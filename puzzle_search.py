@@ -1,19 +1,19 @@
-from Frontier import *
+from puzzle_frontier import *
+
 
 class PuzzleSearch:
-    def __init__(self, target_state : PuzzleState, initial_state : PuzzleState, h_function : int):
+    def __init__(self, target_state: PuzzleState, initial_state: PuzzleState, h_function: int):
         self.initial_state = initial_state
         self.target_state = target_state
         self.h_function = h_function
 
-
-    def search(self, depth : int) -> (bool, int, int):
+    def search(self, depth: int) -> (bool, int, int):
         search_cost = 0
         root_node = PuzzleNode(self.initial_state, 0, self.h_function)
         root_node.compute_f_cost(self.target_state)
         root_node.enumerate_child_nodes()
 
-        frontier = Frontier()
+        frontier = PuzzleFrontier()
         frontier.push(root_node)
         explored_list = dict()
 
@@ -46,4 +46,3 @@ class PuzzleSearch:
                     explored_list[node_key] = node
 
         return is_goal_reached, search_cost, current_depth
-
