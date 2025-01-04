@@ -86,7 +86,7 @@ Search cost: 462
 Max search depth: 20
 ```
 
-Below is the default target state for the search. This configuration can be changed via the target_state_config variable  main.py.
+Below is the default target state for the search. This configuration can be changed via the target_state_config variable in main.py.
 ```
 0 1 2
 3 4 5

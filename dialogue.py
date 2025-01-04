@@ -3,8 +3,8 @@ class Dialogue:
     def select_or_exit_prompt(self) -> None:
         prompt = (
             "\n" +
-            "[Enter] Begin the testing sequence.\n" +
-            "[:q]    Exit the current sequence at any point.")
+            "[Enter]\tBegin the testing sequence.\n" +
+            "[:q]\tExit the current sequence at any point.")
         print(prompt)
 
     def input_selection_prompt(self) -> None:
